@@ -1,21 +1,18 @@
-import React from 'react'
-import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Earphones from './Earphones.jsx';
-import Basket from './Basket.js';
-import App from './App.js';
-import Favourite from './Favourite.js';
+import {createRoot} from 'react-dom/client';
+import {BrowserRouter} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import App from '@app/App.js';
+import {setupStore} from '@app/providers/store/ui/store.js';
+
 
 const container = document.getElementById('root') as HTMLElement;
 const root = createRoot(container);
+const store = setupStore();
 
 root.render(
-    <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/earphones" element={<Earphones />} />
-            <Route path="/basket" element={<Basket />} />
-            <Route path="/favourite" element={<Favourite />} />
-        </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
 )

@@ -1,0 +1,22 @@
+.ProductsPage {
+    margin: 0 auto;
+    max-width: 1110px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.myInput {
+    background: var(--main-bg-color);
+}
+
+.mySelect {
+    margin-top: 15px;
+    width: 150px;
+}
+
+.filters {
+    display: flex;
+    gap: 30px;
+}
+

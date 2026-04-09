@@ -1,0 +1,12 @@
+.Divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+            90deg,
+            transparent 0%,
+            #d4d4d4 20%,
+            #d4d4d4 80%,
+            transparent 100%
+    );
+    margin-bottom: 10px;
+}

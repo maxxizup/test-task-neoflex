@@ -1,0 +1,8 @@
+.BasketPage {
+    margin: 0 auto;
+    flex-grow: 1;
+    max-width: 1110px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
