@@ -1,9 +1,11 @@
-import React from 'react';
+// import styles
 import s from './QuickViewModal.module.css';
+// import types
 import { ProductType } from '@entities/productItem';
+//import components
 import { Divider } from '@shared/ui/Divider/Divider';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
+import { QuickViewGallery } from './components/QuickViewGallery';
+import { useBackdropClose } from '../model/useBackdropClose';
 
 interface QuickViewModalProps {
     isOpen: boolean;
@@ -14,32 +16,25 @@ interface QuickViewModalProps {
 
 export const QuickViewModal = (props: QuickViewModalProps) => {
     const { isOpen, onAddToCart, product, onClose } = props;
+    const backdropHandlers = useBackdropClose(onClose);
 
     if (!isOpen || !product) return null;
-    const mainImage = product.images[0];
 
     return (
-        <div className={s.overlay} onClick={onClose}>
+        <div
+            className={s.overlay}
+            onPointerDown={backdropHandlers.onPointerDown}
+            onClick={backdropHandlers.onClick}
+        >
             <div className={s.modalContainer} onClick={(e) => e.stopPropagation()}>
-                <div className={s.carouselPhoto}>
-                    <div className={s.swiperWrapper}>
-                        <Swiper>
-                            {product.images.map((image, index) => (
-                                <SwiperSlide key={index}>
-                                    <img src={image} alt={product.title} />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
+                <QuickViewGallery product={product} isOpen={isOpen} />
+                <div className={s.modalInfo}>
+                    <div className={s.modalInfoWrapper}>
+                        <h2 className={s.productTitle}>{product.title}</h2>
+                        <p className={s.productPrice}>{product.price} ₽</p>
                     </div>
                 </div>
-                <div className={s.photoList}>photoList</div>
-                <div className={s.modalContent}>
-                    <div className={s.contentMain}>
-                        <h2 className={s.contentTitle}>{product.title}</h2>
-                        <p className={s.price}>{product.price} ₽</p>
-                    </div>
-                </div>
-                <div className={s.contentDesc}>
+                <div className={s.modalDescription}>
                     <Divider />
                     <h3 className={s.descTitle}>Описание товара</h3>
                     <p className={s.descText}>{product.description}</p>

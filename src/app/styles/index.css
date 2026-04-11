@@ -6,10 +6,12 @@
 
 :root {
     --logo-color: #101010;
+    --overlay-bg-color: rgba(0, 0, 0, 0.5);
     --main-bg-color: #EAEAEA;
     --main-accent-color: #FFA542;
     --main-title-color: #1C1C27;
     --product-title-color: #838383;
+    --border-default-color: rgba(170, 170, 170, 0.3);
 }
 
 html,

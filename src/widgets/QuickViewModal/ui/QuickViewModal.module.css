@@ -1,108 +1,111 @@
 .overlay {
-    position:fixed;
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-
-    background: rgba(0, 0, 0, 0.5);
-
+    padding: 40px;
+    background: var(--overlay-bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
-
     z-index: 1000;
 }
 
 .modalContainer {
     display: grid;
-    grid-template:
-            "photo photoList" 500px
-            "modalContent modalContent" 50px
-            "desc actionBtns" 250px
-    / 650px 230px;
+    grid-template-areas:
+            "photo photoList"
+            "modalContent modalContent"
+            "desc actionBtns";
+    grid-template-rows: minmax(300px, auto) auto auto;
+    grid-template-columns: minmax(0, 650px) auto;
     background: white;
     border-radius: 30px;
 }
 
-.carouselPhoto {
+.mainImg {
     padding: 10px;
     grid-area: photo;
-    border-right: 1px solid rgba(170, 170, 170, 0.3);
-    border-bottom: 1px solid rgba(170, 170, 170, 0.3);
+    border-right: 1px solid var(--border-default-color);
+    border-bottom: 1px solid var(--border-default-color);
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.swiperWrapper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.swiperWrapper :global(.swiper) {
-    width: 100%;
-    height: 100%;
-}
-
-.swiperWrapper :global(.swiper-slide) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.swiperWrapper :global(.swiper-slide img) {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-}
-
-.mainImg {
-    width: 250px;
-    height: auto;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
 }
 
 .photoList {
     padding: 10px;
     grid-area: photoList;
-    /*border: 2px dashed #aaa;*/
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
 }
 
-.modalContent {
+.photoPreview {
+    width: 100%;
+    height: 100px;
+    padding: 8px;
+    border: 1px solid var(--border-default-color);
+    border-radius: 16px;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.photoPreview:hover {
+    opacity: 0.5;
+}
+
+.photoPreview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.photoPreviewActive {
+    border-color: var(--main-accent-color);
+    box-shadow: 0 0 0 1px var(--main-accent-color);
+}
+
+.modalInfo {
     padding: 10px;
     grid-area: modalContent;
-    /*border: 2px dashed #aaa;*/
 }
 
-.contentMain {
+.modalInfoWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.contentTitle {
+.productTitle {
     margin-left: 30px;
     font-weight: 700;
     font-size: 24px;
 }
 
-.price {
-    margin-right: 80px;
+.productPrice {
+    margin-right: 60px;
     font-weight: 700;
     font-size: 24px;
     color: var(--main-accent-color);
 }
 
-.contentDesc {
+.modalDescription {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
-    /*border: 2px dashed #aaa;*/
+    padding: 0 20px 20px 20px;
 }
 
 .descTitle {
@@ -120,8 +123,7 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
-    /*border: 2px dashed #aaa;*/
-    gap: 30px;
+    gap: 15px;
 }
 
 .addToFavourBtn {
@@ -162,24 +164,4 @@
 
 .addToCartBtn:hover {
     opacity: 0.6;
-}
-
-.photo_slider {
-    position: relative;
-    top: 450px;
-    width: 450px;
-}
-
-.slides {
-    width: 100%;
-}
-
-.slide {
-    width: 100%;
-}
-
-.slide img {
-    width: 100%; /* Картинка заполняет всю ширину контейнера */
-    height: auto; /* Сохраняет пропорции */
-    display: block; /* Убираем отступы снизу */
 }
