@@ -11,13 +11,14 @@ import type { Swiper as SwiperType } from 'swiper';
 import { ProductType } from '@entities/productItem';
 
 interface ModalSliderProps {
-    product: ProductType;
+    productImgs: string[];
+    productTitle: string;
     activeIndex: number;
     onSlideChange: (index: number) => void;
 }
 
 export const ModalSlider = (props: ModalSliderProps) => {
-    const { product, activeIndex, onSlideChange } = props;
+    const { productImgs, productTitle, activeIndex, onSlideChange } = props;
     const swiperRef = useRef<SwiperType | null>(null);
 
     useEffect(() => {
@@ -38,9 +39,9 @@ export const ModalSlider = (props: ModalSliderProps) => {
                 modules={[Navigation]}
                 navigation
             >
-                {product.images.map((image, index) => (
+                {productImgs.map((image, index) => (
                     <SwiperSlide key={index}>
-                        <img src={image} alt={product.title} draggable={false} />
+                        <img src={image} alt={productTitle} draggable={false} />
                     </SwiperSlide>
                 ))}
             </Swiper>

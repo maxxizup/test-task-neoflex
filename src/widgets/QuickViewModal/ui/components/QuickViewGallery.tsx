@@ -5,22 +5,22 @@ import s from '../QuickViewModal.module.css';
 
 interface QuickViewGalleryProps {
     product: ProductType;
-    isOpen: boolean;
 }
 
 export const QuickViewGallery = (props: QuickViewGalleryProps) => {
-    const { product, isOpen } = props;
+    const { product } = props;
     const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
     useEffect(() => {
         setActivePhotoIndex(0);
-    }, [product.id, isOpen]);
+    }, [product]);
 
     return (
         <>
             <div className={s.mainImg}>
                 <ModalSlider
-                    product={product}
+                    productImgs={product.images}
+                    productTitle={product.title}
                     activeIndex={activePhotoIndex}
                     onSlideChange={setActivePhotoIndex}
                 />

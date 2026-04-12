@@ -1,0 +1,16 @@
+.modalInfo {
+    padding: 10px;
+    grid-area: modalContent;
+}
+
+.modalInfoWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.productTitle {
+    margin-left: 30px;
+    font-weight: 700;
+    font-size: 24px;
+}

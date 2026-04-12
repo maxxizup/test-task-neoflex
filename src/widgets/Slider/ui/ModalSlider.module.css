@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    height: 500px;
+    height: min(500px, 50vh);
 }
 
 .swiperWrapper :global(.swiper) {

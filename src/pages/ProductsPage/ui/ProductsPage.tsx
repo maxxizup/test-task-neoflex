@@ -3,29 +3,29 @@ import { useEffect, useState } from 'react';
 import './ProductsPage.css';
 // import components
 import { Input } from 'antd';
+import { useAppDispatch, useAppSelector } from '@shared/config/redux/redux.ts';
 import { useProducts } from '@features/filterProducts/hooks/useProducts.ts';
 import { useCategories } from '@features/filterProducts/hooks/useCategories.ts';
 import { useCategorizedProducts } from '@features/filterProducts/hooks/useCategorizedProducts.ts';
 import { Filters } from '@features/filterProducts';
+import { QuickViewModal } from '@widgets/QuickViewModal';
 import { ProductContent } from '@widgets/ProductContent';
-import { message } from 'antd';
-
+import { PageLoader } from '@widgets/PageLoader';
+import { addToBasket } from '@app/providers/store/reducers/BasketSlice.ts';
+import { fetchProducts } from '@app/providers/store/reducers/ProductsSlice';
 // import types
 import { ProductType } from '@entities/productItem';
 import { FilterType } from '@features/filterProducts';
-import { useAppDispatch, useAppSelector } from '@shared/config/redux/redux.ts';
-import { addToBasket } from '@app/providers/store/reducers/BasketSlice.ts';
-import { fetchProducts } from '@app/providers/store/reducers/ProductsSlice';
-import { PageLoader } from '@widgets/PageLoader';
-import { QuickViewModal } from '@widgets/QuickViewModal';
+import {useNotification} from "@shared/lib/hooks/useNotification.ts";
 
 const ProductsPage = () => {
     const { items, loading, error } = useAppSelector((state) => state.products);
     const dispatch = useAppDispatch();
+    const { showSuccess, contextHolder } = useNotification();
 
     useEffect(() => {
         dispatch(fetchProducts());
-    }, [dispatch]);
+    }, []);
 
     // states
     const [filter, setFilter] = useState<FilterType>({
@@ -33,7 +33,6 @@ const ProductsPage = () => {
         sortMethod: '',
         groupBy: '',
     });
-    const [messageApi, contextHolder] = message.useMessage();
     const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     // ------------------------------------------------------------------------
@@ -51,7 +50,7 @@ const ProductsPage = () => {
     // handlers
     function handleAdd(product: ProductType) {
         dispatch(addToBasket(product));
-        messageApi.success('Товар успешно добавлен в корзину!');
+        showSuccess('Товар успешно добавлен в корзину!');
     }
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -95,12 +94,12 @@ const ProductsPage = () => {
                     />
                 </>
             )}
-            <QuickViewModal
+            {isModalOpen && <QuickViewModal
                 isOpen={isModalOpen}
                 product={selectedProduct}
                 onClose={closeQuickView}
                 onAddToCart={handleAdd}
-            />
+            />}
         </div>
     );
 };

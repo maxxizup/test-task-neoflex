@@ -3,9 +3,12 @@ import s from './QuickViewModal.module.css';
 // import types
 import { ProductType } from '@entities/productItem';
 //import components
-import { Divider } from '@shared/ui/Divider/Divider';
+import { QVProductInfo } from "@widgets/QuickViewModal/ui/QVProductInfo.tsx";
 import { QuickViewGallery } from './components/QuickViewGallery';
 import { useBackdropClose } from '../model/useBackdropClose';
+import {QVProductDesc} from "@widgets/QuickViewModal/ui/QVProductDesc.tsx";
+import {QVProductActions} from "@widgets/QuickViewModal/ui/QVProductActions.tsx";
+import {useLockBodyScroll} from "@widgets/QuickViewModal/model/useLockBodyScroll.ts";
 
 interface QuickViewModalProps {
     isOpen: boolean;
@@ -17,8 +20,12 @@ interface QuickViewModalProps {
 export const QuickViewModal = (props: QuickViewModalProps) => {
     const { isOpen, onAddToCart, product, onClose } = props;
     const backdropHandlers = useBackdropClose(onClose);
+    useLockBodyScroll(isOpen);
 
-    if (!isOpen || !product) return null;
+    if (!isOpen) return null;
+    if (!product) return null;
+
+    const handleAddToCart = () => onAddToCart(product);
 
     return (
         <div
@@ -27,27 +34,10 @@ export const QuickViewModal = (props: QuickViewModalProps) => {
             onClick={backdropHandlers.onClick}
         >
             <div className={s.modalContainer} onClick={(e) => e.stopPropagation()}>
-                <QuickViewGallery product={product} isOpen={isOpen} />
-                <div className={s.modalInfo}>
-                    <div className={s.modalInfoWrapper}>
-                        <h2 className={s.productTitle}>{product.title}</h2>
-                        <p className={s.productPrice}>{product.price} ₽</p>
-                    </div>
-                </div>
-                <div className={s.modalDescription}>
-                    <Divider />
-                    <h3 className={s.descTitle}>Описание товара</h3>
-                    <p className={s.descText}>{product.description}</p>
-                </div>
-                <div className={s.actionBtns}>
-                    <button className={s.addToFavourBtn}>
-                        <img src="/src/shared/assets/icons/favourite.svg" alt="favourite" />
-                    </button>
-                    <button className={s.addToCartBtn} onClick={() => onAddToCart(product)}>
-                        <img src="/src/shared/assets/icons/basket.svg" alt="basket" />
-                        Добавить в корзину
-                    </button>
-                </div>
+                <QuickViewGallery product={product} />
+                <QVProductInfo title={product.title} />
+                <QVProductDesc description={product.description} />
+                <QVProductActions onAddToCart={handleAddToCart} price={product.price}/>
             </div>
         </div>
     );
